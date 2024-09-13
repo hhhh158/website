@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle at top right, #74ebd5, #ACB6E5);
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .welcome-screen, .login-screen {
+            position: absolute;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease, transform 1s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95);
+        }
+        .welcome-screen h1 {
+            color: #fff;
+            font-size: 3.5rem;
+            letter-spacing: 2px;
+            animation: zoomIn 1.5s ease forwards;
+            opacity: 0;
+            text-align: center;
+        }
+        .welcome-screen p {
+            color: #eee;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            animation: fadeInUp 2.5s ease forwards;
+            opacity: 0;
+        }
+        .welcome-screen {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            padding: 40px;
+            border-radius: 20px;
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .login-screen {
+            background-color: #ffffff;
+            color: #333;
+            border-radius: 15px;
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.9);
+            transition: all 1s ease;
+        }
+        input {
+            padding: 12px;
+            margin: 15px 0;
+            width: 100%;
+            border: 2px solid #ccc;
+            border-radius: 30px;
+            outline: none;
+            transition: border 0.3s ease, transform 0.3s ease;
+        }
+        input:focus {
+            border: 2px solid #6e8efb;
+            transform: scale(1.05);
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #6e8efb;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        button:hover {
+            background-color: #5c75d1;
+            transform: translateY(-5px);
+        }
+        .otp-field {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes slideUpFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .sparkle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: sparkle 4s infinite ease-in-out;
+        }
+        @keyframes sparkle {
+            0%, 100% {
+                transform: scale(0) translateY(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.5) translateY(-200px);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-screen" id="welcomeScreen">
+            <h1>Welcome to Our Platform</h1>
+            <p>Your journey starts here.</p>
+            <div class="sparkle" style="width: 20px; height: 20px; top: 80%; left: 60%; animation-delay: 1s;"></div>
+            <div class="sparkle" style="width: 15px; height: 15px; top: 70%; left: 80%; animation-delay: 2s;"></div>
+            <div class="sparkle" style="width: 10px; height: 10px; top: 50%; left: 50%; animation-delay: 3s;"></div>
+        </div>
+
+        <div class="login-screen" id="loginScreen">
+            <h2 style="animation: slideUpFadeIn 1s ease forwards;">Login</h2>
+            <form id="loginForm">
+                <input type="text" id="name" placeholder="Name" required style="animation: slideUpFadeIn 1.2s ease forwards;">
+                <input type="tel" id="phone" placeholder="Phone Number" required style="animation: slideUpFadeIn 1.4s ease forwards;">
+                <button type="button" onclick="submitLogin()" style="animation: slideUpFadeIn 1.6s ease forwards;">Submit</button>
+                <div class="otp-field" id="otpField">
+                    <input type="text" id="otp" placeholder="Enter OTP" required style="animation: slideUpFadeIn 1.8s ease forwards;">
+                    <button type="submit" style="animation: slideUpFadeIn 2s ease forwards;">Verify OTP</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById('welcomeScreen').style.opacity = '0';
+            document.getElementById('welcomeScreen').style.visibility = 'hidden';
+            document.getElementById('loginScreen').style.opacity = '1';
+            document.getElementById('loginScreen').style.visibility = 'visible';
+            document.getElementById('loginScreen').style.transform = 'scale(1)';
+        }, 5000);
+
+        function submitLogin() {
+            var name = document.getElementById('name').value;
+            var phone = document.getElementById('phone').value;
+
+            if (name && phone) {
+                document.getElementById('otpField').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('otpField').style.opacity = '1';
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>
